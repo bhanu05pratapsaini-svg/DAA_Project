@@ -1,0 +1,11 @@
+#include "parking.h"
+#include <stdio.h>
+#include <string.h>
+#include <limits.h>
+void parking_init(ParkingLot*l){if(l)memset(l,0,sizeof(*l));}
+int parking_add_space(ParkingLot*l,ParkingSpace s){if(!l||l->space_count>=MAX_SPACES||s.id<=0||s.capacity<=0||s.occupied<0||s.occupied>s.capacity||s.hourly_rate<0)return 0;for(size_t i=0;i<l->space_count;i++)if(l->spaces[i].id==s.id)return 0;l->spaces[l->space_count++]=s;return 1;}
+int parking_add_driver(ParkingLot*l,Driver d){if(!l||l->driver_count>=MAX_DRIVERS||d.id<=0)return 0;for(size_t i=0;i<l->driver_count;i++)if(l->drivers[i].id==d.id)return 0;l->drivers[l->driver_count++]=d;return 1;}
+static int has_driver(const ParkingLot*l,int id){for(size_t i=0;i<l->driver_count;i++)if(l->drivers[i].id==id)return 1;return 0;}
+int parking_reserve(ParkingLot*l,int driver,int space,int start,int end){if(!l||!has_driver(l,driver)||start<0||end<=start||l->reservation_count>=MAX_RESERVATIONS)return 0;ParkingSpace*s=NULL;for(size_t i=0;i<l->space_count;i++)if(l->spaces[i].id==space)s=&l->spaces[i];if(!s||s->occupied>=s->capacity)return 0;for(size_t i=0;i<l->reservation_count;i++){Reservation*r=&l->reservations[i];if(r->active&&r->space_id==space&&start<r->end_minute&&r->start_minute<end)return 0;}int id=(int)l->reservation_count+1;l->reservations[l->reservation_count++]=(Reservation){id,driver,space,start,end,1};return 1;}
+void parking_print(const ParkingLot*l){puts("ID   AREA       OCCUPANCY   RATE/hr");for(size_t i=0;i<l->space_count;i++){const ParkingSpace*s=&l->spaces[i];printf("%-4d %-10s %d/%d         %.2f\n",s->id,s->zone,s->occupied,s->capacity,s->hourly_rate);}}
+int parking_allocate_nearest(ParkingLot*l,int driver,int x,int y,int start,int end){if(!l||!has_driver(l,driver))return -1;int best=-1;long long bd=LLONG_MAX;for(size_t i=0;i<l->space_count;i++){ParkingSpace*s=&l->spaces[i];long long dx=s->x-x,dy=s->y-y,d=dx*dx+dy*dy;int free_slot=s->occupied<s->capacity;for(size_t j=0;j<l->reservation_count;j++){Reservation*r=&l->reservations[j];if(r->active&&r->space_id==s->id&&start<r->end_minute&&r->start_minute<end)free_slot=0;}if(free_slot&&d<bd){best=s->id;bd=d;}}return best>=0&&parking_reserve(l,driver,best,start,end)?best:-1;}
