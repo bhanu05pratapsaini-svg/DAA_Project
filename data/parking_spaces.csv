@@ -1,0 +1,4 @@
+id,zone,capacity,occupied,hourly_rate,x,y
+1,Central,1,0,20,2,3
+2,Market,1,0,15,8,4
+3,Station,1,1,12,5,9
