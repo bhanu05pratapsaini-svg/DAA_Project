@@ -1,0 +1,4 @@
+*.o
+smartpark
+tests/test_algorithms
+*.csv.tmp
