@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
+#include <stdio.h>
 static void merge(int*a,int*t,int l,int m,int r){int i=l,j=m,k=l;while(i<m&&j<r)t[k++]=a[i]<=a[j]?a[i++]:a[j++];while(i<m)t[k++]=a[i++];while(j<r)t[k++]=a[j++];for(i=l;i<r;i++)a[i]=t[i];}
 static void msort(int*a,int*t,int l,int r){if(r-l<2)return;int m=l+(r-l)/2;msort(a,t,l,m);msort(a,t,m,r);merge(a,t,l,m,r);}
 void merge_sort(int*a,size_t n){if(!a||n<2)return;int*t=malloc(n*sizeof(int));if(!t)return;msort(a,t,0,(int)n);free(t);}
@@ -22,5 +23,4 @@ static int queens(int row,int n,unsigned cols,unsigned d1,unsigned d2){if(row==n
 int n_queens_count(int n){return n<1||n>15?0:queens(0,n,0,0,0);}
 void matrix_multiply(const long long*a,const long long*b,long long*c,int n){for(int i=0;i<n;i++)for(int j=0;j<n;j++){c[i*n+j]=0;for(int k=0;k<n;k++)c[i*n+j]+=a[i*n+k]*b[k*n+j];}}
 static void match(const char*t,const char*p){size_t n=strlen(t),m=strlen(p);if(!m)return;for(size_t i=0;i+m<=n;i++)if(memcmp(t+i,p,m)==0)printf("match at %zu\n",i);}
-#include <stdio.h>
 void naive_search(const char*t,const char*p){if(t&&p)match(t,p);} void rabin_karp_search(const char*t,const char*p){if(t&&p)match(t,p);} void kmp_search(const char*t,const char*p){if(t&&p)match(t,p);} void automaton_search(const char*t,const char*p){if(t&&p)match(t,p);}
