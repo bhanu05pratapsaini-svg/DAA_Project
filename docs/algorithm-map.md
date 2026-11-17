@@ -10,8 +10,8 @@ This is a student project starter. Implemented means a source routine exists; pl
 | Fast power | Modular utility | Implemented |
 | Celebrity | Identify a one-way hub | Implemented |
 | Activity selection | Non-overlapping reservations | Implemented |
-| Interval partitioning | Allocate bays across overlaps | Planned |
-| Huffman | Compress event logs | Planned |
+| Interval partitioning | Allocate bays across overlaps | Implemented |
+| Huffman | Compress event logs | Implemented |
 | Dijkstra | Road routing | Implemented |
 | Prim and Kruskal | Infrastructure connection | Prim implemented; Kruskal planned |
 | 0/1 knapsack | Upgrade selection under budget | Implemented |
