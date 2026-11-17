@@ -1,0 +1,5 @@
+#include "parking.h"
+#include "algorithms.h"
+#include "benchmark.h"
+#include <stdio.h>
+int main(void){ParkingLot lot;parking_init(&lot);parking_add_space(&lot,(ParkingSpace){1,"Central",1,0,20,2,3});parking_add_space(&lot,(ParkingSpace){2,"Market",1,0,15,8,4});parking_add_space(&lot,(ParkingSpace){3,"Station",1,1,12,5,9});parking_add_driver(&lot,(Driver){101,"Aarav",0,100});int c=0;do{puts("\nSMART PARKING\n1 Show spaces\n2 Reserve nearest\n3 Algorithm demo\n4 Benchmark\n0 Exit");printf("Choose: ");if(scanf("%d",&c)!=1){int ch;while((ch=getchar())!='\n'&&ch!=EOF){}c=-1;continue;}if(c==1)parking_print(&lot);else if(c==2){int id=parking_allocate_nearest(&lot,101,0,0,480,540);if(id<0)puts("No suitable space available.");else printf("Reserved space %d.\n",id);}else if(c==3){int a[]={9,2,7,1,5};merge_sort(a,5);printf("Sorted:");for(int i=0;i<5;i++)printf(" %d",a[i]);printf("\nN-Queens(8): %d\n3^13 mod 97: %lld\n",n_queens_count(8),fast_power(3,13,97));}else if(c==4)run_benchmarks();else if(c!=0)puts("Choose a listed option.");}while(c!=0);return 0;}
