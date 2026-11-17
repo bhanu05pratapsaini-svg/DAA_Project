@@ -2,7 +2,7 @@
 
 - include/: public domain records and algorithm interfaces.
 - src/parking.c: domain validation and reservation conflict checks.
-- src/algorithms.c: sorting, searching, divide-and-conquer and DP exercises.
+- src/algorithms.c: sorting, searching, divide-and-conquer, DP, Huffman coding and interval partitioning.
 - src/graph.c: road graph, shortest paths, spanning tree, flow and matching.
 - src/benchmark.c: deterministic timing entry point.
 - src/main.c: menu-driven CLI.
